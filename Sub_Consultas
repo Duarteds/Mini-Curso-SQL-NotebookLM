@@ -1,0 +1,19 @@
+7 PROMPT: Como funcionam as sub-consultas em relação aos Joins?
+RESPOSTA:
+	As sub-consultas e os *joins* são ferramentas utilizadas para recuperar informações de múltiplas tabelas, mas operam de maneiras distintas. Enquanto os **joins** conectam tabelas diretamente na cláusula `FROM` para formar um conjunto de resultados combinados, as **sub-consultas** são comandos `SELECT` aninhados dentro de outro `SELECT` que devolvem resultados intermediários.
+
+Abaixo estão os detalhes de funcionamento e as principais diferenças entre eles:
+
+### Funcionamento das Sub-consultas
+Uma sub-consulta é executada para **cada linha** retornada pela consulta principal. Ela pode ser posicionada em diferentes partes do comando SQL:
+*   **Antes da cláusula FROM:** Utilizada para criar colunas temporárias que buscam dados em outras tabelas. Por exemplo, para mostrar o nome de um funcionário e buscar sua agência bancária em outra tabela sem listá-la no `FROM` principal.
+*   **Na cláusula WHERE:** Utilizada para filtrar a consulta principal com base em uma lista de valores ou em uma condição lógica.
+
+### Relação e Comparação com os Joins
+*   **Substituição:** Em muitos casos, é possível obter o mesmo resultado usando sub-consultas ou *joins*. Por exemplo, você pode usar um `WHERE` com `IN (sub-consulta)` para filtrar registros que existam em outra tabela, o que equivale a um *join*.
+*   **Performance:** Os materiais indicam que, em diversas situações, é **vantajoso utilizar sub-consultas** em vez de relacionar várias tabelas no `SELECT` principal via *join*, pois elas podem ser executadas de forma mais rápida pelo sistema.
+*   **Limitação de Linhas:** Diferente de um *join*, que pode multiplicar as linhas de uma tabela (Produto Cartesiano) se não houver um filtro adequado, uma sub-consulta padrão **não pode retornar mais de uma linha** por registro da consulta principal, sob risco de erro na execução.
+*   **Lógica de Conjuntos:** As sub-consultas permitem o uso de operadores de comparação de conjuntos como `>some`, `>all`, `exists` e `not exists`, que testam a existência ou a relação de um valor contra um grupo de resultados de forma mais direta do que um *join* tradicional.
+
+### Uso da Condição EXISTS
+A condição `EXISTS` é uma forma comum de utilizar sub-consultas como alternativa aos *joins*. Ela retorna um valor lógico (verdadeiro ou falso) se a sub-consulta encontrar pelo menos uma linha correspondente, o que evita o erro de "múltiplas linhas" comum em outras formas de aninhamento.
