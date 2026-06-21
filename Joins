@@ -1,0 +1,45 @@
+6 PROMPT: A partir desses exemplos mostre agora como consultar registros em várias tabelas utilizando joins
+RESPOSTA:
+	Para consultar registros em várias tabelas simultaneamente, a SQL utiliza o conceito de **relacionamento** ou **Junções (Joins)**. No modelo relacional, os dados não estão isolados; as tabelas se conectam através de chaves primárias e estrangeiras.
+
+Abaixo, detalho as principais formas de realizar essas consultas conforme os materiais:
+
+### 1. Junção Implícita (via cláusula WHERE)
+Esta é a forma básica de relacionar tabelas. Você lista as tabelas desejadas na cláusula `FROM` e estabelece a condição de ligação na cláusula `WHERE`. Sem essa condição, o banco de dados realiza um **Produto Cartesiano**, combinando cada linha de uma tabela com todas as linhas da outra, o que geralmente gera resultados incorretos.
+
+*   **Exemplo:** Consultar o nome do funcionário e o nome do seu departamento:
+    `SELECT funcionarios.nome, deptos.nome FROM funcionarios, deptos WHERE funcionarios.cod_depto = deptos.cod_depto`
+
+### 2. Uso de Variáveis de Tupla (Aliases/Apelidos)
+Quando tabelas diferentes possuem colunas com o mesmo nome (como "nome" na tabela de funcionários e "nome" na de departamentos), é obrigatório identificar a qual tabela você se refere usando a notação `tabela.coluna`. Para simplificar, você pode criar **apelidos** na cláusula `FROM`.
+
+*   **Exemplo:**
+    `SELECT F.nome, D.nome FROM funcionarios F, deptos D WHERE F.cod_depto = D.cod_depto`
+
+### 3. KEY JOIN
+Alguns sistemas permitem o uso da cláusula `KEY JOIN`, que efetua o relacionamento **automaticamente** baseando-se nas chaves primárias e estrangeiras definidas no modelo físico, simplificando a escrita da consulta.
+
+*   **Exemplo:**
+    `SELECT funcionarios.nome, deptos.nome FROM funcionarios KEY JOIN deptos`
+    *Nota: Esta cláusula exige que o relacionamento seja direto e que não existam valores nulos na chave de ligação.*
+
+### 4. Outer Joins (Junções Externas)
+As junções comuns (vistas acima) desprezam registros que não possuem um correspondente na outra tabela. Se você quiser listar **todos** os registros de uma tabela, mesmo aqueles que não têm vínculo (como um funcionário que ainda não possui conta em banco), deve usar o **Outer Join**.
+
+*   **LEFT OUTER JOIN (`*=`):** Traz todas as linhas da tabela à **esquerda**, mesmo sem correspondência na direita.
+    `SELECT funcionarios.nome, bancos.nome FROM funcionarios LEFT OUTER JOIN bancos`
+    *(Ou em algumas sintaxes: `WHERE funcionarios.cod_banco *= bancos.cod_banco`)*
+
+*   **RIGHT OUTER JOIN (`=*`):** Traz todas as linhas da tabela à **direita**.
+    `SELECT funcionarios.nome, bancos.nome FROM funcionarios RIGHT OUTER JOIN bancos`
+
+### Resumo das Junções
+
+| Tipo de Join | Função |
+| :--- | :--- |
+| **Simple Join (WHERE)** | Retorna apenas registros que possuem correspondência em ambas as tabelas. |
+| **KEY JOIN** | Realiza a junção automática baseada nas chaves do banco. |
+| **LEFT OUTER JOIN** | Garante que todos os dados da primeira tabela sejam exibidos. |
+| **RIGHT OUTER JOIN** | Garante que todos os dados da segunda tabela sejam exibidos. |
+
+Você também pode utilizar **Sub-consultas** (SELECTs aninhados) para recuperar informações de outras tabelas, o que às vezes pode ser mais rápido em termos de execução.
