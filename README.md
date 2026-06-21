@@ -1,4 +1,5 @@
 # <h1>Mini-Curso-SQL-NotebookLM</h1>
+
 # Curso de orientação de estudos em SQL utilizando o NotebookLM. Com objetivo de manter atualizado sobre o conteúdo e também de orientar outras pessoas que estão querendo aprender ou que estão com alguma dificuldade pra realizar uma tarefa relacionada a este assunto.
 
 <h2>  Sobre </h2>
