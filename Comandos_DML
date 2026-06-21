@@ -1,0 +1,52 @@
+5 PROMPT: Mostre exemplos dos principais comandos DML em sql:
+RESPOSTA:
+	A **Linguagem de Manipulação de Dados (DML)** é o conjunto de comandos SQL utilizados para acessar, recuperar, inserir, remover e modificar informações em um banco de dados. Os quatro comandos fundamentais da série DML são **SELECT**, **INSERT**, **UPDATE** e **DELETE**.
+
+Abaixo estão os detalhes e exemplos de cada um, conforme as fontes:
+
+### 1. SELECT (Consulta)
+É o comando principal da DML, utilizado para **recuperar informações** armazenadas. Ele permite listar campos específicos, filtrar registros com condições e ordenar os resultados.
+
+*   **Selecionar colunas específicas:**
+    `SELECT Ra, Nome FROM aluno WHERE serie = 3`
+*   **Selecionar todas as colunas de uma tabela:**
+    `SELECT * FROM funcionarios`
+*   **Filtrar com múltiplas condições (Operadores lógicos):**
+    `SELECT * FROM funcionarios WHERE cod_depto = 4 AND dt_admissao = '1985/02/11'`
+*   **Ordenar resultados:**
+    `SELECT serie, nome FROM aluno ORDER BY serie DESC, nome ASC`
+*   **Eliminar resultados duplicados:**
+    `SELECT DISTINCT salario FROM funcionarios`
+
+### 2. INSERT (Inserção)
+Este comando é utilizado para **carregar novos dados** em uma tabela que foi criada previamente.
+
+*   **Inserção simples (seguindo a ordem das colunas):**
+    `INSERT INTO aluno VALUES (123251, 'José da Silva', 3, 'B', 'Rua Direita, 45')`
+*   **Inserção especificando as colunas (útil quando não se lembra a ordem exata):**
+    `INSERT INTO aluno(nome, ra, serie, endereco, turma) VALUES ('José da Silva', 123251, 3, 'Rua Direita, 45', 'B')`
+
+### 3. UPDATE (Alteração)
+O comando **UPDATE** serve para **modificar o valor de um campo** em um registro já existente ou em um grupo de registros que atendam a uma condição.
+
+*   **Alterar um registro específico:**
+    `UPDATE aluno SET serie = 4 WHERE ra = 123251`
+*   **Alterar múltiplos registros simultaneamente:**
+    `UPDATE aluno SET serie = 4 WHERE serie = 3 AND turma = 'B'`
+
+### 4. DELETE (Remoção)
+Utilizado para **excluir registros** de uma tabela. É fundamental utilizar a cláusula `WHERE` para evitar a exclusão acidental de todos os dados.
+
+*   **Remover registros específicos:**
+    `DELETE FROM aluno WHERE serie = 3 AND turma = 'A'`
+*   **Remover todos os registros de uma tabela:**
+    `DELETE FROM alunos`
+
+### Resumo das Funções DML
+
+| Comando | Função Principal |
+| :--- | :--- |
+| **SELECT** | Recuperação/Consulta de informações. |
+| **INSERT** | Inserção de novas informações. |
+| **UPDATE** | Modificação de informações existentes. |
+| **DELETE** | Remoção de informações. |
