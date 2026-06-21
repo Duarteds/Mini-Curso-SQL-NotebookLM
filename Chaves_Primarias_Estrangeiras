@@ -1,0 +1,40 @@
+4 PROMPT: Explique a diferença entre chaves primarias e estrangeiras no sql
+RESPOSTA:
+	No SQL, a principal diferença entre chaves primárias e estrangeiras reside na sua função dentro do banco de dados: a **chave primária** serve para identificar registros de forma única dentro de sua própria tabela, enquanto a **chave estrangeira** estabelece uma ligação (relacionamento) entre tabelas distintas.
+
+Abaixo, detalho as características e funções de cada uma:
+
+### Chave Primária (Primary Key - PK)
+*   **Função:** É o identificador exclusivo de cada registro em uma tabela.
+*   **Unicidade:** Não podem existir duas linhas com o mesmo valor na chave primária.
+*   **Valores Nulos:** Por padrão, os campos que compõem uma chave primária não podem conter valores nulos (`NOT NULL`), pois isso impediria a identificação do registro.
+*   **Composição:** Pode ser formada por apenas um campo ou por um conjunto de campos (chamada de chave composta).
+*   **Exemplo:** Em uma tabela de Alunos, o campo `id_aluno` identifica cada estudante de forma única.
+
+### Chave Estrangeira (Foreign Key - FK)
+*   **Função:** É um atributo que aponta para a chave primária de outra tabela, permitindo o relacionamento entre os dados.
+*   **Integridade Referencial:** Garante que o valor inserido na tabela "filha" obrigatoriamente exista na tabela "pai". Por exemplo, não é possível cadastrar um funcionário em um departamento que não esteja previamente cadastrado na tabela de departamentos.
+*   **Relacionamento:** Representa o "lado muitos" em relacionamentos de 1 para muitos (1:N). Por exemplo, um curso pode ter várias vendas relacionadas a ele através da chave estrangeira `id_curso` na tabela de Vendas.
+*   **Valores Nulos:** Diferente da PK, uma chave estrangeira pode aceitar valores nulos, caso o relacionamento não seja obrigatório (ex: um funcionário que ainda não foi alocado em nenhum banco).
+
+### Resumo das Diferenças
+
+| Característica | Chave Primária (PK) | Chave Estrangeira (FK) |
+| :--- | :--- | :--- |
+| **Propósito** | Identificar uma linha de forma única. | Relacionar tabelas entre si. |
+| **Unicidade** | O valor deve ser único na tabela. | Os valores podem se repetir (ex: vários funcionários no mesmo depto). |
+| **Nulos** | Não permite valores nulos. | Pode permitir nulos, se o projeto permitir. |
+| **Localização** | Existe na própria tabela onde define os dados. | Existe em uma tabela referenciando outra. |
+
+### Implementação em SQL
+Para definir essas chaves durante a criação de uma tabela, utilizam-se as cláusulas `PRIMARY KEY` e `FOREIGN KEY` associadas a `REFERENCES`:
+
+```sql
+CREATE TABLE cursos (
+    id_curso integer PRIMARY KEY, -- Define a Chave Primária
+    nome_curso varchar(200) NOT NULL,
+    id_professor integer,
+    FOREIGN KEY (id_professor) REFERENCES professores (id_professor) -- Define a Chave Estrangeira
+);
+```
+No exemplo acima, `id_curso` garante que cada curso seja único, enquanto `id_professor` garante que o curso esteja vinculado a um professor válido que já existe na tabela de professores.
