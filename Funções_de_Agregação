@@ -1,0 +1,26 @@
+8 - PROMPT: Quais são as funções de agregação e como usá-las?
+RESPOSTA:
+	As funções de agregação (ou funções agregadas) são ferramentas da linguagem SQL utilizadas para realizar cálculos em grupos de registros, operando em "agregações" de linhas para retornar um **valor único** como resultado. Elas são essenciais para transformar grandes volumes de dados em informações sumarizadas e úteis para a tomada de decisões.
+
+De acordo com as fontes, as principais funções e suas formas de uso são:
+
+### Principais Funções de Agregação
+*   **`avg` (Média):** Calcula a média aritmética dos valores de uma coluna. Exemplo: `SELECT avg(salario) FROM funcionarios`.
+*   **`sum` (Soma):** Totaliza os valores de uma coluna numérica. Exemplo: `SELECT sum(salario) FROM funcionarios`.
+*   **`count` (Contagem):** Conta o número de registros. Pode ser usada como `count(*)` para contar todas as linhas de uma tabela ou em conjunto com `DISTINCT` para contar valores únicos.
+*   **`min` (Mínimo):** Identifica o menor valor em um conjunto de registros.
+*   **`max` (Máximo):** Identifica o maior valor em um conjunto de registros.
+*   **`list` (Lista):** Retorna uma lista de valores separados por vírgula (função específica de algumas implementações como o ISQL).
+
+### Como usá-las corretamente
+Para extrair o potencial máximo dessas funções, elas são frequentemente combinadas com outras cláusulas:
+
+1.  **Cláusula `GROUP BY`:** É utilizada para dividir as linhas de uma tabela em grupos menores baseados em um ou mais atributos. Por exemplo, para ver o total de salários por departamento: `SELECT cod_depto, sum(salario) FROM funcionarios GROUP BY cod_depto`.
+2.  **Cláusula `HAVING`:** Serve para aplicar condições de filtro aos **grupos** resultantes do `GROUP BY`, permitindo o uso de funções de agregação na comparação. Exemplo: buscar agências onde a média de saldo é superior a 1.200: `... GROUP BY agencia HAVING avg(saldo) > 1200`.
+3.  **Uso de `DISTINCT`:** Pode ser inserido dentro da função para eliminar duplicatas antes do cálculo. Por exemplo, para contar quantos clientes únicos possuem conta em uma agência: `count(distinct nome_cliente)`.
+4.  **Tratamento de Nulos (`ISNULL`):** Operações matemáticas com valores nulos resultam em nulo. Para evitar isso em agregações, usa-se a função `ISNULL(campo, 0)` para tratar o valor como zero caso ele não exista.
+
+### Regras e Restrições Importantes
+*   **Não composição:** As funções agregadas **não podem ser compostas** diretamente na SQL (ex: não é permitido usar `max(avg(saldo))`).
+*   **Ordem de execução:** Em uma consulta complexa, o predicado `WHERE` é aplicado primeiro para filtrar linhas individuais; em seguida, as linhas restantes são agrupadas pelo `GROUP BY` e, por fim, o `HAVING` filtra esses grupos.
+*   **Padrão ANSI:** Requer que a função `count` seja utilizada preferencialmente como `count(*)` ou `count(distinct...)`.
